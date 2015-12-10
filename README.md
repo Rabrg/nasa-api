@@ -1,2 +1,2 @@
 # nasa-api
-A Java implementation of the NASA Open API.
+A Java wrapper of the NASA Open API.
