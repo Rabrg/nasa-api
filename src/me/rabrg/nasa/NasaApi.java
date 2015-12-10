@@ -11,6 +11,7 @@ import java.io.IOException;
 
 /**
  * The core class of the NASA API.
+ *
  * @author Ryan Greene
  */
 public final class NasaApi {
@@ -40,27 +41,32 @@ public final class NasaApi {
 
     /**
      * Constructs a new NASA API instance with the specified API key.
+     *
      * @param apiKey The API key.
      */
     public NasaApi(final String apiKey) {
-        retrofit = new Retrofit.Builder().baseUrl("https://api.nasa.gov").addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("https://api.nasa.gov")
+                .addConverterFactory(GsonConverterFactory.create()).build();
         nearEarthObjectService = retrofit.create(NearEarthObjectService.class);
         this.apiKey = apiKey;
     }
 
     /**
      * Gets a list of asteroids based on their closest approach date to Earth.
+     *
      * @param startDate The starting date for asteroid search.
-     * @param endDate The ending date for asteroid search.
+     * @param endDate   The ending date for asteroid search.
      * @return The list of asteroids based on their closest approach date to Earth.
      * @throws IOException If the request is unsuccessful.
      */
-    public NearEarthObjectFeed getNearEarthObjectBrowse(final String startDate, final String endDate) throws IOException {
+    public NearEarthObjectFeed getNearEarthObjectBrowse(final String startDate, final String endDate)
+            throws IOException {
         return nearEarthObjectService.feed(startDate, endDate, apiKey).execute().body();
     }
 
     /**
      * Gets a specific asteroid based on its NASA JPL small body (SPK-ID) ID.
+     *
      * @param asteroidId The asteroid SPK-ID correlates to the NASA JPL small body.
      * @return The specific asteroid based on its NASA JPL small body (SPK-ID) ID.
      * @throws IOException If the request is unsuccessful.
@@ -71,6 +77,7 @@ public final class NasaApi {
 
     /**
      * Gets the overall Asteroid data-set.
+     *
      * @return The overall Asteroid data-set.
      * @throws IOException If the request is unsuccessful.
      */
