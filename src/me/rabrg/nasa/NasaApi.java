@@ -1,8 +1,10 @@
 package me.rabrg.nasa;
 
+import me.rabrg.nasa.model.apod.AstronomyPictureDay;
 import me.rabrg.nasa.model.neo.NearEarthObject;
 import me.rabrg.nasa.model.neo.NearEarthObjectBrowse;
 import me.rabrg.nasa.model.neo.NearEarthObjectFeed;
+import me.rabrg.nasa.service.AstronomyPictureDayService;
 import me.rabrg.nasa.service.NearEarthObjectService;
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -27,6 +29,11 @@ public final class NasaApi {
     private final NearEarthObjectService nearEarthObjectService;
 
     /**
+     * The service instance used to get the astronomy picture of the day.
+     */
+    private final AstronomyPictureDayService astronomyPictureDayService;
+
+    /**
      * The API key which is sent in REST requests.
      */
     private final String apiKey;
@@ -48,6 +55,7 @@ public final class NasaApi {
         retrofit = new Retrofit.Builder().baseUrl("https://api.nasa.gov")
                 .addConverterFactory(GsonConverterFactory.create()).build();
         nearEarthObjectService = retrofit.create(NearEarthObjectService.class);
+        astronomyPictureDayService = retrofit.create(AstronomyPictureDayService.class);
         this.apiKey = apiKey;
     }
 
@@ -83,5 +91,19 @@ public final class NasaApi {
      */
     public NearEarthObjectBrowse getNearEarthObjectBrowse() throws IOException {
         return nearEarthObjectService.browse(apiKey).execute().body();
+    }
+
+    /**
+     * Gets the astronomy picture of the day from the specified date and optionally the concept tags and hd picture.
+     *
+     * @param date        The date of the astronomy picture of the day image to retrieve.
+     * @param conceptTags Whether or not an ordered dictionary of concepts from the APOD explanation should be returned.
+     * @param hd          Whether or not the URL for the high resolution image should be returned.
+     * @return The astronomy picture of the day.
+     * @throws IOException If the request is unsuccessful.
+     */
+    public AstronomyPictureDay getAstronomyPictureOfTheDay(final String date, final boolean conceptTags,
+                                                           final boolean hd) throws IOException {
+        return astronomyPictureDayService.astronomyPictureOfTheDay(date, conceptTags, hd, apiKey).execute().body();
     }
 }
