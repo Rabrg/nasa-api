@@ -11,7 +11,8 @@ import retrofit.http.Query;
 public interface NearEarthObjectService {
 
     @GET("/neo/reset/v1/feed")
-    Call<NearEarthObjectFeed> feed(@Query("start_date") String startDate, @Query("end_date") String endDate, @Query("api_key") String apiKey);
+    Call<NearEarthObjectFeed> feed(@Query("start_date") String startDate, @Query("end_date") String endDate,
+            @Query("api_key") String apiKey);
 
     @GET("/neo/rest/v1/neo/{id}")
     Call<NearEarthObject> nearEarthObject(@Path("id") String asteroidId, @Query("api_key") String apiKey);

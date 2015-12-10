@@ -103,7 +103,7 @@ public final class NasaApi {
      * @throws IOException If the request is unsuccessful.
      */
     public AstronomyPictureDay getAstronomyPictureOfTheDay(final String date, final boolean conceptTags,
-                                                           final boolean hd) throws IOException {
+            final boolean hd) throws IOException {
         return astronomyPictureDayService.astronomyPictureOfTheDay(date, conceptTags, hd, apiKey).execute().body();
     }
 }
