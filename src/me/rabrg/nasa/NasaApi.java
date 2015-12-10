@@ -59,7 +59,7 @@ public final class NasaApi {
      * @return The list of asteroids based on their closest approach date to Earth.
      * @throws IOException If the request is unsuccessful.
      */
-    public NearEarthObjectFeed getNearEarthObjectBrowse(final String startDate, final String endDate)
+    public NearEarthObjectFeed getNearEarthObjectFeed(final String startDate, final String endDate)
             throws IOException {
         return nearEarthObjectService.feed(startDate, endDate, apiKey).execute().body();
     }
