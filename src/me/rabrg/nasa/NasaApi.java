@@ -52,8 +52,8 @@ public final class NasaApi {
      * @param apiKey The API key.
      */
     public NasaApi(final String apiKey) {
-        retrofit = new Retrofit.Builder().baseUrl("https://api.nasa.gov")
-                .addConverterFactory(GsonConverterFactory.create()).build();
+        retrofit = new Retrofit.Builder().baseUrl("https://api.nasa.gov").addConverterFactory(GsonConverterFactory
+                .create()).build();
         nearEarthObjectService = retrofit.create(NearEarthObjectService.class);
         astronomyPictureDayService = retrofit.create(AstronomyPictureDayService.class);
         this.apiKey = apiKey;
@@ -63,7 +63,7 @@ public final class NasaApi {
      * Gets a list of asteroids based on their closest approach date to Earth.
      *
      * @param startDate The starting date for asteroid search.
-     * @param endDate   The ending date for asteroid search.
+     * @param endDate The ending date for asteroid search.
      * @return The list of asteroids based on their closest approach date to Earth.
      * @throws IOException If the request is unsuccessful.
      */
@@ -96,9 +96,9 @@ public final class NasaApi {
     /**
      * Gets the astronomy picture of the day from the specified date and optionally the concept tags and hd picture.
      *
-     * @param date        The date of the astronomy picture of the day image to retrieve.
+     * @param date The date of the astronomy picture of the day image to retrieve.
      * @param conceptTags Whether or not an ordered dictionary of concepts from the APOD explanation should be returned.
-     * @param hd          Whether or not the URL for the high resolution image should be returned.
+     * @param hd Whether or not the URL for the high resolution image should be returned.
      * @return The astronomy picture of the day.
      * @throws IOException If the request is unsuccessful.
      */
