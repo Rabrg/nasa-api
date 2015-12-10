@@ -71,7 +71,7 @@ public final class NasaApi {
      * @return The specific asteroid based on its NASA JPL small body (SPK-ID) ID.
      * @throws IOException If the request is unsuccessful.
      */
-    public NearEarthObject getNearEarthObject(final int asteroidId) throws IOException {
+    public NearEarthObject getNearEarthObject(final String asteroidId) throws IOException {
         return nearEarthObjectService.nearEarthObject(asteroidId, apiKey).execute().body();
     }
 
