@@ -1,12 +1,15 @@
 package me.rabrg.nasa.model.neo;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public final class NearEarthObjectBrowse {
 
     private Links links;
     private Page page;
-    private List<String> nearEarthObjects;
+    @SerializedName("near_earth_objects")
+    private List<NearEarthObject> nearEarthObjects;
 
     public Links getLinks() {
         return links;
@@ -16,7 +19,7 @@ public final class NearEarthObjectBrowse {
         return page;
     }
 
-    public List<String> getNearEarthObjects() {
+    public List<NearEarthObject> getNearEarthObjects() {
         return nearEarthObjects;
     }
 }
