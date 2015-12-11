@@ -1,7 +1,7 @@
 nasa-api
 ========
 
-A Java wrapper of the NASA Open API.
+A Java wrapper of the NASA Open API
 
 Dependencies
 ------------
