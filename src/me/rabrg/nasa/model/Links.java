@@ -1,6 +1,6 @@
-package me.rabrg.nasa.model.neo;
+package me.rabrg.nasa.model;
 
-final class Links {
+public final class Links {
 
     private String next;
     private String prev;

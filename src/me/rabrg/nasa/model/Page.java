@@ -1,8 +1,8 @@
-package me.rabrg.nasa.model.neo;
+package me.rabrg.nasa.model;
 
 import com.google.gson.annotations.SerializedName;
 
-final class Page {
+public final class Page {
 
     private int size;
     @SerializedName("total_elements")
