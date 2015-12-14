@@ -2,10 +2,13 @@ package me.rabrg.nasa;
 
 import com.squareup.okhttp.Headers;
 import me.rabrg.nasa.model.apod.AstronomyPictureDay;
+import me.rabrg.nasa.model.earth.EarthAssets;
+import me.rabrg.nasa.model.earth.EarthImage;
 import me.rabrg.nasa.model.neo.NearEarthObject;
 import me.rabrg.nasa.model.neo.NearEarthObjectBrowse;
 import me.rabrg.nasa.model.neo.NearEarthObjectFeed;
 import me.rabrg.nasa.service.AstronomyPictureDayService;
+import me.rabrg.nasa.service.EarthService;
 import me.rabrg.nasa.service.NearEarthObjectService;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
@@ -35,6 +38,11 @@ public final class NasaApi {
      * The service instance used to get the astronomy picture of the day.
      */
     private final AstronomyPictureDayService astronomyPictureDayService;
+
+    /**
+     * The service instance used to get data regarding
+     */
+    private final EarthService earthService;
 
     /**
      * The API key which is sent in REST requests.
@@ -69,6 +77,7 @@ public final class NasaApi {
                 .create()).build();
         nearEarthObjectService = retrofit.create(NearEarthObjectService.class);
         astronomyPictureDayService = retrofit.create(AstronomyPictureDayService.class);
+        earthService  = retrofit.create(EarthService.class);
         this.apiKey = apiKey;
     }
 
@@ -118,6 +127,37 @@ public final class NasaApi {
     public AstronomyPictureDay getAstronomyPictureOfTheDay(final String date, final boolean conceptTags,
             final boolean hd) throws IOException {
         return get(astronomyPictureDayService.astronomyPictureOfTheDay(date, conceptTags, hd, apiKey));
+    }
+
+    /**
+     * Gets the Landsat 8 image for the supplied location and date.
+     *
+     * @param lat The latitude of the image.
+     * @param lon The longitude of the image.
+     * @param dim The width and height of the image in degrees.
+     * @param date The date of the image.
+     * @param cloudScore Whether or not calculate the percentage of the image covered by clouds.
+     * @return The earth image.
+     * @throws IOException If the call is unsuccessful.
+     */
+    public EarthImage getEarthImage(final double lat, final double lon, final double dim, final String date,
+            final boolean cloudScore) throws IOException {
+        return get(earthService.earthImage(lat, lon, dim, date, cloudScore, apiKey));
+    }
+
+    /**
+     * Gets the date-times and asset names for available imagery for a supplied location.
+     *
+     * @param lat The latitude of the assets.
+     * @param lon The longitude of the assets.
+     * @param begin The beginning of date range.
+     * @param end The end of date range.
+     * @return The earth assets.
+     * @throws IOException If the call is unsuccessful.
+     */
+    public EarthAssets getEarthAssets(final double lat, final double lon, final String begin, final String end)
+            throws IOException {
+        return get(earthService.earthAssets(lat, lon, begin, end, apiKey));
     }
 
     /**
