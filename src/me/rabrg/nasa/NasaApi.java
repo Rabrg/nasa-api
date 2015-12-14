@@ -4,11 +4,13 @@ import com.squareup.okhttp.Headers;
 import me.rabrg.nasa.model.apod.AstronomyPictureDay;
 import me.rabrg.nasa.model.earth.EarthAssets;
 import me.rabrg.nasa.model.earth.EarthImage;
+import me.rabrg.nasa.model.mars.MarsRoverPhotos;
 import me.rabrg.nasa.model.neo.NearEarthObject;
 import me.rabrg.nasa.model.neo.NearEarthObjectBrowse;
 import me.rabrg.nasa.model.neo.NearEarthObjectFeed;
 import me.rabrg.nasa.service.AstronomyPictureDayService;
 import me.rabrg.nasa.service.EarthService;
+import me.rabrg.nasa.service.MarsRoverPhotosService;
 import me.rabrg.nasa.service.NearEarthObjectService;
 import retrofit.Call;
 import retrofit.GsonConverterFactory;
@@ -45,6 +47,11 @@ public final class NasaApi {
     private final EarthService earthService;
 
     /**
+     * The service instance used to get mars rover photos.
+     */
+    private final MarsRoverPhotosService marsRoverPhotosService;
+
+    /**
      * The API key which is sent in REST requests.
      */
     private final String apiKey;
@@ -78,6 +85,7 @@ public final class NasaApi {
         nearEarthObjectService = retrofit.create(NearEarthObjectService.class);
         astronomyPictureDayService = retrofit.create(AstronomyPictureDayService.class);
         earthService  = retrofit.create(EarthService.class);
+        marsRoverPhotosService= retrofit.create(MarsRoverPhotosService.class);
         this.apiKey = apiKey;
     }
 
@@ -161,7 +169,34 @@ public final class NasaApi {
     }
 
     /**
+     * Gets mars rover photos for the specified sol, camera, and page.
+     *
+     * @param sol The sol of the photo.
+     * @param camera The camera which took the photo.
+     * @param page The page of the photos.
+     * @return The photos.
+     * @throws IOException If the call is unsuccessful.
+     */
+    public MarsRoverPhotos getMarsRoverPhotos(final int sol, final String camera, final int page) throws IOException {
+        return get(marsRoverPhotosService.marsRoverPhotoSol(sol, camera, page, apiKey));
+    }
+
+    /**
+     * Gets mars rover photos for the specified earth date, camera, and page.
+     *
+     * @param earthDate The earth date of the photo.
+     * @param camera The camera which took the photo.
+     * @param page The page of the photos.
+     * @return The photos.
+     * @throws IOException If the call is unsuccessful.
+     */
+    public MarsRoverPhotos getMarsRoverPhotos(final String earthDate, final String camera, final int page) throws IOException {
+        return get(marsRoverPhotosService.marsRoverPhotoEarthDate(earthDate, camera, page, apiKey));
+    }
+
+    /**
      * Gets the response body for the specified call and sets the rate limit vatiables.
+     *
      * @param call The call.
      * @param <T> The type of the call.
      * @return The response body.
@@ -177,6 +212,7 @@ public final class NasaApi {
 
     /**
      * Gets the amount of requests allowed per hour.
+     *
      * @return The amount of requests allowed per hour.
      */
     public int getRateLimit() {
@@ -185,6 +221,7 @@ public final class NasaApi {
 
     /**
      * Gets the amount of remaining requests allowed to be made this hour.
+     *
      * @return The amount of remaining requests allowed to be made this hour.
      */
     public int getRateLimitRemaining() {
